@@ -111,7 +111,7 @@ def no_image_settings(monkeypatch):
 def test_the_image_follows_the_machine_profile(no_image_settings):
     from pool import spec as specs
 
-    repo = "ghcr.io/ykirpichev/human-gym/grader"
+    repo = "ghcr.io/ykirpichev/gymhub/grader"
     cpu = specs.normalize(pooled.spec_for(kit_adapter("algo"), "test", ["x"], needs_gpu=False))
     gpu = specs.normalize(pooled.spec_for(kit_adapter("algo"), "test", ["x"], needs_gpu=True))
     # labels as pool/profile.py sets them on each kind of machine
@@ -127,8 +127,8 @@ def test_the_image_follows_the_machine_profile(no_image_settings):
 
 def test_image_overrides_and_pins(no_image_settings, monkeypatch):
     monkeypatch.setenv("GYMHUB_GRADER_VERSION", "abc1234")
-    assert pooled.choose_images(True) == ("ghcr.io/ykirpichev/human-gym/grader:cuda-abc1234",
-                                          {"gpu=tegra": "ghcr.io/ykirpichev/human-gym/grader:l4t-r36-abc1234"})
+    assert pooled.choose_images(True) == ("ghcr.io/ykirpichev/gymhub/grader:cuda-abc1234",
+                                          {"gpu=tegra": "ghcr.io/ykirpichev/gymhub/grader:l4t-r36-abc1234"})
     assert not pooled.ships_graders(True)
     monkeypatch.setenv("GYMHUB_GRADER_IMAGE", "registry.lan:5000/grader")
     assert pooled.choose_images(False) == ("registry.lan:5000/grader:cpu-abc1234", {})

@@ -29,7 +29,9 @@ POOL_TEST_POSTGRES=postgresql://postgres:pool@localhost:5432/postgres python -m 
 CI uses CPU-only PyTorch and SQLite (no CUDA, no Firestore). Tests that need CUDA skip themselves. Tests must be safe to run in parallel (`-n auto`): use `tmp_path` and free ports, never fixed paths or ports. The pool's Postgres tests are a separate CI job.
 
 ### Gym packages
+The gyms live in ykirpichev/gymhub-gyms. `gyms/` is not tracked here: `python -m gymhub.gymsfetch` fills it at the commit `gyms.lock` pins (setup.sh, `gymhub-board` and CI do this); a `gyms/` you link or create yourself is left alone. To change which gyms the platform is tested and shipped with, bump `gyms.lock`.
 ```bash
+python -m gymhub.gymsfetch                      # gyms/ at the pinned commit
 python -m gymhub.packages validate              # validate all gyms in gyms/
 python -m gymhub.packages validate gyms/llm     # validate one gym
 python -m gymhub.packages pack gyms/<id>        # produce a .tar.gz bundle
@@ -111,7 +113,7 @@ problems/<slug>/
   problem.py         private: grader — defines Problem(params, reference, cases, bench_case, ...)
 ```
 
-The board and learners receive only the public parts. Machines that grade receive the full package. The GPU gym is an ordinary package at `gyms/gpu/`.
+The board and learners receive only the public parts. Machines that grade receive the full package. The GPU gym is an ordinary package at `gyms/gpu/` (from the gyms repository).
 
 ### Key env vars
 | Variable | Purpose |

@@ -150,7 +150,7 @@ def auth_config():
     """Public: what the sign-in page needs."""
     return {
         "mode": mode(), "google_client_id": os.environ.get("GYMHUB_GOOGLE_CLIENT_ID", ""),
-        "source_url": os.environ.get("GYMHUB_SOURCE_URL", "https://github.com/ykirpichev/human-gym"),
+        "source_url": os.environ.get("GYMHUB_SOURCE_URL", "https://github.com/ykirpichev/gymhub"),
     }
 
 

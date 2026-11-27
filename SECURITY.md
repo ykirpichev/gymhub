@@ -6,7 +6,7 @@ Human Gym runs code that other people wrote: every submission to a gym is a prog
 
 **Please do not open a public issue, pull request or discussion for a security problem.**
 
-Report it privately through GitHub: open the repository's **Security** tab and choose **Report a vulnerability** ([direct link](https://github.com/ykirpichev/human-gym/security/advisories/new)). Only the maintainers can see the report.
+Report it privately through GitHub: open the repository's **Security** tab and choose **Report a vulnerability** ([direct link](https://github.com/ykirpichev/gymhub/security/advisories/new)). Only the maintainers can see the report.
 
 Please include:
 

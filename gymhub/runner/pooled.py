@@ -87,7 +87,7 @@ Settings (environment):
                                                result is recorded under the GPU model of the pool machine
                                                that measured it
     GYMHUB_GRADER_IMAGE=<repo>                 where the grader images live (default
-                                               ghcr.io/ykirpichev/human-gym/grader)
+                                               ghcr.io/ykirpichev/gymhub/grader)
     GYMHUB_GRADER_VERSION=<short sha>          pin the grader images (tags cpu-<sha>, ...; default: the
                                                floating tags cpu, cuda, l4t-r36; a machine keeps a floating
                                                tag it has pulled, so pin to roll a new build out)
@@ -113,7 +113,7 @@ from gymhub.runner import slices
 from gymhub.runner.adapters import REPO, GymAdapter
 
 GRADERS = ("gymkit", "gpu_gym")
-GRADER_IMAGE = "ghcr.io/ykirpichev/human-gym/grader"
+GRADER_IMAGE = "ghcr.io/ykirpichev/gymhub/grader"
 TIMEOUTS_MIN = {"run": 6, "test": 6, "bench": 21, "validate": 31}
 ALL_ACTIONS = {"run", "test", "bench", "validate"}
 # What /work needs to validate an uploaded version (gymhub/runner/validate.py and what it imports).

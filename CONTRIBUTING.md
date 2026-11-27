@@ -11,8 +11,8 @@ Thanks for helping. Human Gym takes three kinds of contributions: new gym conten
 ## Set up
 
 ```bash
-git clone https://github.com/ykirpichev/human-gym
-cd human-gym
+git clone https://github.com/ykirpichev/gymhub
+cd gymhub
 ./setup.sh && source .venv/bin/activate
 ```
 
@@ -57,7 +57,7 @@ python -m gymhub.cli gym check my-gym.gym.md        # compile it; errors come wi
 python -m gymhub.cli gym validate my-gym.gym.md     # also run the reference solutions against the tests
 ```
 
-Gyms in the repository live as packages under `gyms/<id>/`. Each exercise has public parts (`problem.json`, `PROBLEM.md`, `HINTS.md`, `starter/`) and private parts (`solution/`, `problem.py`). Learners and the board only ever see the public parts, so keep answers out of them. `python -m gymhub.packages validate gyms/<id>` must pass before a gym is merged.
+Gyms live in their own repository, [gymhub-gyms](https://github.com/ykirpichev/gymhub-gyms), as packages under `<id>/`; send changes to gyms there. Here they appear under `gyms/<id>/`, fetched at the commit `gyms.lock` pins (`python -m gymhub.gymsfetch`), or linked to your clone of the gyms repository. Each exercise has public parts (`problem.json`, `PROBLEM.md`, `HINTS.md`, `starter/`) and private parts (`solution/`, `problem.py`). Learners and the board only ever see the public parts, so keep answers out of them. `python -m gymhub.packages validate gyms/<id>` must pass before a gym is merged.
 
 Do not commit your own solutions or `progress.json`: `gyms/*/solutions/` is for your local attempts only.
 

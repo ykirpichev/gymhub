@@ -284,6 +284,7 @@ esac
 say "Installing the gyms"
 .venv/bin/pip install -q ninja numpy rich
 .venv/bin/pip install -q -e ".[hub]"
+.venv/bin/python -m gymhub.gymsfetch || warn "could not fetch the gyms; run .venv/bin/python -m gymhub.gymsfetch later."
 
 install_clangd
 if [[ "$TORCH_KIND" != none ]]; then

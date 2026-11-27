@@ -69,6 +69,8 @@ jobs:
         with:
           # The commit whose tests passed, not whatever main points at now.
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+      - name: Fetch the gyms (gyms.lock pins a commit of the gyms repository)
+        run: python3 -m gymhub.gymsfetch
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

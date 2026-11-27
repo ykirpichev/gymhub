@@ -13,10 +13,12 @@ Each exercise is a function you write and a grader that tests it: correctness fi
 | [GPU](docs/gpu-gym.md) (`gyms/gpu`) | 29 kernels in CUDA, PyTorch or Triton, from vector add to matmul, flash attention, MoE, sorting and FP16 Tensor Core and int8 kernels, benchmarked against your GPU's memory bandwidth | NVIDIA GPU |
 | LLM (`gyms/llm`) | 14 building blocks in PyTorch: RMSNorm, SwiGLU, MoE, LoRA, RoPE, causal, grouped-query and paged attention, KV cache, sampling, beam search, speculative decoding, GRPO loss | NVIDIA GPU |
 | Algo (`gyms/algo`) | 19 exercises: intervals, monotonic stacks, binary search on the answer, heaps, tries, LRU, union-find, topological sort, BFS, MST, Dijkstra, DP, in Python (the first nine also in C++), with time limits that reward the right complexity and an editorial for each | CPU |
-| [ML coding, ML fundamentals, LLM fundamentals](gyms/README.md) | Interview practice: NumPy coding, plus multiple choice, typed and written answers | CPU |
-| [PyTorch and NumPy](gyms/README.md) (`gyms/pytorch-numpy`) | Tensor fluency: views and strides, broadcasting, einsum, gathers and scatters, autograd, training loops, numerics | CPU |
-| [ML system design interview](gyms/README.md) (`gyms/ml-system-design`) | The design round: lessons with diagrams on the answer framework, sizing, data and features, retrieval and ranking, experiments, LLM serving (KV cache, batching, cost) and RAG, then worked designs and practice prompts | CPU |
-| [GPU and ML systems interview](gyms/README.md) (`gyms/gpu-interview`) | Kernel, performance and ML systems interview prep: lessons, CUDA and Triton fill-ins, rooflines, GPU algorithms simulated in Python, quantization, distributed training, LLM serving, mock deep-dives | CPU |
+| [ML coding, ML fundamentals, LLM fundamentals](https://github.com/ykirpichev/gymhub-gyms#readme) | Interview practice: NumPy coding, plus multiple choice, typed and written answers | CPU |
+| [PyTorch and NumPy](https://github.com/ykirpichev/gymhub-gyms#readme) (`gyms/pytorch-numpy`) | Tensor fluency: views and strides, broadcasting, einsum, gathers and scatters, autograd, training loops, numerics | CPU |
+| [ML system design interview](https://github.com/ykirpichev/gymhub-gyms#readme) (`gyms/ml-system-design`) | The design round: lessons with diagrams on the answer framework, sizing, data and features, retrieval and ranking, experiments, LLM serving (KV cache, batching, cost) and RAG, then worked designs and practice prompts | CPU |
+| [GPU and ML systems interview](https://github.com/ykirpichev/gymhub-gyms#readme) (`gyms/gpu-interview`) | Kernel, performance and ML systems interview prep: lessons, CUDA and Triton fill-ins, rooflines, GPU algorithms simulated in Python, quantization, distributed training, LLM serving, mock deep-dives | CPU |
+
+The gyms live in their own repository, [gymhub-gyms](https://github.com/ykirpichev/gymhub-gyms). `./setup.sh` and `gymhub-board` fetch the commit that `gyms.lock` pins into `gyms/` (or run `python -m gymhub.gymsfetch`). To work on the gyms, clone that repository and link it as `gyms/` (see `gymhub/gymsfetch.py`).
 
 You can also write your own gym as one Markdown file ([Gym Markdown](gymhub/GYM_MARKDOWN.md)).
 
@@ -25,7 +27,7 @@ You can also write your own gym as one Markdown file ([Gym Markdown](gymhub/GYM_
 On Linux (x86_64 or aarch64) or an Apple-silicon Mac with Python 3.10+:
 
 ```bash
-git clone https://github.com/ykirpichev/human-gym && cd human-gym
+git clone https://github.com/ykirpichev/gymhub && cd gymhub
 ./setup.sh && source .venv/bin/activate     # venv and PyTorch for this machine
 
 algo-gym next                               # prints the first unsolved exercise and its file
@@ -51,7 +53,7 @@ It first prints what this machine can grade (the GPU, whether PyTorch can use it
 | --- | --- |
 | Practise GPU kernels: the practice loop, reading a benchmark, adding an exercise | [docs/gpu-gym.md](docs/gpu-gym.md) |
 | Use the board: Run vs Submit, custom cases, sharing and uploading gyms, the AI tutor, leaderboards | [docs/board.md](docs/board.md) |
-| Write a gym or a course | [Gym Markdown](gymhub/GYM_MARKDOWN.md), [gyms/README.md](gyms/README.md) |
+| Write a gym or a course | [Gym Markdown](gymhub/GYM_MARKDOWN.md), [gyms/README.md](https://github.com/ykirpichev/gymhub-gyms#readme) |
 | Host the board for other people: on your network with `gymhub-board --lan`, Google Cloud deploy, sign-in, adding machines, grading on the pool | [docs/self-hosting.md](docs/self-hosting.md) |
 | Run containers and multi-machine jobs on machines you own | [docs/pool.md](docs/pool.md) |
 | Find your way around the code | [CLAUDE.md](CLAUDE.md) |
