@@ -1,6 +1,6 @@
 # Compute pool
 
-`pool` runs containers on machines that you and your friends own: register a machine with one command, then run a script on any of them and get its logs and output files back. It implements milestones M1 and M2 of [issue #45](https://github.com/ykirpichev/human-gym/issues/45), which builds towards MoE training, RL and batch inference on commodity machines. The package does not import gymhub, so it can later move to its own repository.
+`pool` runs containers on machines that you and your friends own: register a machine with one command, then run a script on any of them and get its logs and output files back. It implements milestones M1 and M2 of issue #45 in the earlier repository, which builds towards MoE training, RL and batch inference on commodity machines. The package does not import gymhub, so it can later move to its own repository.
 
 ```
 pool server --data ~/pool-data --port 8765            # prints a one-time admin code on first start
@@ -61,8 +61,8 @@ Both halves of the pool run in containers: the **controller** (the pool server, 
 
 | Image | What | Built from |
 |---|---|---|
-| `ghcr.io/ykirpichev/human-gym/pool` | pool server (`server`) and agent (`agent`, the default command) | `deploy/pool/Dockerfile` |
-| `ghcr.io/ykirpichev/human-gym/dispatcher` | the board's dispatcher (`gymhub-runner --dispatch-only`) | `deploy/pool/Dockerfile.dispatcher` |
+| `ghcr.io/ykirpichev/gymhub/pool` | pool server (`server`) and agent (`agent`, the default command) | `deploy/pool/Dockerfile` |
+| `ghcr.io/ykirpichev/gymhub/dispatcher` | the board's dispatcher (`gymhub-runner --dispatch-only`) | `deploy/pool/Dockerfile.dispatcher` |
 
 Both are multi-arch (amd64, arm64: x86 machines, DGX Spark and Jetson) and published by `.github/workflows/pool-images.yml` as `latest` and `<short sha>`. Add `--build` to the compose commands below to build them from your checkout instead.
 

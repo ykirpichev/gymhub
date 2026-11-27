@@ -689,7 +689,7 @@ say "  remove:   sudo pool-agent uninstall  (unregisters it; leaves Docker insta
 
 # The agent's container image (deploy/pool/Dockerfile, published by .github/workflows/pool-images.yml).
 # A server names another with POOL_AGENT_IMAGE; a machine with install.sh --image.
-AGENT_IMAGE = "ghcr.io/ykirpichev/human-gym/pool:latest"
+AGENT_IMAGE = "ghcr.io/ykirpichev/gymhub/pool:latest"
 
 
 def render(server: str, package_sha256: str, agent_image: str | None = None) -> str:

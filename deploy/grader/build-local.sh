@@ -9,6 +9,6 @@
 set -eu
 FLAVOR="${1:-cuda}"
 case "$FLAVOR" in cpu|cuda) FILE="deploy/grader/Dockerfile.$FLAVOR" ;; l4t-r36) FILE=deploy/grader/Dockerfile.l4t ;; *) echo "flavor: cpu, cuda or l4t-r36" >&2; exit 2 ;; esac
-IMAGE="${GYMHUB_GRADER_IMAGE:-ghcr.io/ykirpichev/human-gym/grader}"
+IMAGE="${GYMHUB_GRADER_IMAGE:-ghcr.io/ykirpichev/gymhub/grader}"
 docker build -f "$FILE" -t "$IMAGE:$FLAVOR" .
 echo "built $IMAGE:$FLAVOR"

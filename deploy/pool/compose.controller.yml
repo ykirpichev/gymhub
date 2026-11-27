@@ -10,7 +10,7 @@ name: pool-controller
 
 services:
   pool-server:
-    image: ${POOL_IMAGE:-ghcr.io/ykirpichev/human-gym/pool:latest}
+    image: ${POOL_IMAGE:-ghcr.io/ykirpichev/gymhub/pool:latest}
     build: {context: ../.., dockerfile: deploy/pool/Dockerfile}
     command: ["server", "--public-url", "${POOL_PUBLIC_URL:?set POOL_PUBLIC_URL in deploy/pool/.env, e.g. http://192.168.1.10:8765}"]
     environment:
@@ -30,7 +30,7 @@ services:
   dispatcher:
     # Leases the board's jobs and grades every one on the pool; runs nothing itself. Starts once it has
     # a pool member (POOL_TOKEN, or `pool login` below) and a board (GYMHUB_API + GYMHUB_WORKER_TOKEN).
-    image: ${DISPATCHER_IMAGE:-ghcr.io/ykirpichev/human-gym/dispatcher:latest}
+    image: ${DISPATCHER_IMAGE:-ghcr.io/ykirpichev/gymhub/dispatcher:latest}
     build: {context: ../.., dockerfile: deploy/pool/Dockerfile.dispatcher}
     depends_on: [pool-server]
     environment:

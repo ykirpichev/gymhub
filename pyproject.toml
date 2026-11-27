@@ -1,5 +1,5 @@
 [project]
-name = "human-gym"
+name = "gymhub"
 version = "0.1.0"
 description = "Practice gyms (GPU kernels, LLM internals, algorithms), a web board to practise them on, and a compute pool"
 requires-python = ">=3.10"

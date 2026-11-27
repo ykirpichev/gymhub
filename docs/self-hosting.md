@@ -162,7 +162,7 @@ The job runs in a self-contained grader image (`deploy/grader/`, built and pushe
 | Variable | Purpose |
 |---|---|
 | `GYMHUB_EXECUTOR=pool` | grade isolated jobs on the pool (the default; `local` never uses the pool, so the runner takes only its owner's jobs) |
-| `GYMHUB_GRADER_IMAGE` | where the grader images live (default `ghcr.io/ykirpichev/human-gym/grader`) |
+| `GYMHUB_GRADER_IMAGE` | where the grader images live (default `ghcr.io/ykirpichev/gymhub/grader`) |
 | `GYMHUB_GRADER_VERSION` | pin the grader images to a build (`<short sha>`; default: the floating tags) |
 | `GYMHUB_POOL_IMAGE` | override: the image for pool jobs (Python with the graders' dependencies, and nvcc for CUDA) |
 | `GYMHUB_POOL_IMAGES` | override: per-platform images, for example `gpu=tegra=<jetson image>` |

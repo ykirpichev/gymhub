@@ -262,6 +262,11 @@ def main(argv: list[str] | None = None) -> int:
     new.add_argument("--id")
     new.set_defaults(func=_new)
     gym.add_parser("guide", help="print the Gym Markdown reference").set_defaults(func=_guide)
+    from gymhub import gymsfetch
+
+    fetch = gym.add_parser("fetch", help="put the gyms repository in gyms/ at the commit gyms.lock pins")
+    gymsfetch.add_arguments(fetch)
+    fetch.set_defaults(func=gymsfetch.run)
     from gymhub import sync
 
     sync.register(groups)  # login, pull, push, watch, run, submit: practise in a local editor

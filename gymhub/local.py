@@ -219,6 +219,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--check", action="store_true", help="Print what this machine can grade and exit")
     args = parser.parse_args(argv)
 
+    from gymhub import gymsfetch
+
+    fetched = gymsfetch.ensure()  # a fresh checkout has no gyms/ yet: get the pinned ones
+    if fetched:
+        print(f"gymhub-board: {fetched}")
     env = environment(lan=args.lan, owner=args.owner)
     if args.host is None:
         args.host = "0.0.0.0" if args.lan else "127.0.0.1"

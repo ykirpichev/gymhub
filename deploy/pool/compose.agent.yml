@@ -13,7 +13,7 @@ name: pool-agent
 
 services:
   agent:
-    image: ${POOL_IMAGE:-ghcr.io/ykirpichev/human-gym/pool:latest}
+    image: ${POOL_IMAGE:-ghcr.io/ykirpichev/gymhub/pool:latest}
     build: {context: ../.., dockerfile: deploy/pool/Dockerfile}
     container_name: pool-agent
     command: ["agent"]
@@ -23,7 +23,7 @@ services:
       POOL_NAME: ${POOL_NAME:-}
       POOL_UID: ${POOL_UID:-10001}
       POOL_GID: ${POOL_GID:-10001}
-      POOL_IMAGE: ${POOL_IMAGE:-ghcr.io/ykirpichev/human-gym/pool:latest}
+      POOL_IMAGE: ${POOL_IMAGE:-ghcr.io/ykirpichev/gymhub/pool:latest}
     # The host's network: peers reach the agent's peer port (8766) and it reports the LAN address it
     # reaches the server from. The host's PIDs: it tells the owner's own GPU work from its jobs'.
     network_mode: host

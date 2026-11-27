@@ -21,6 +21,7 @@ on:
       - gpu_gym/**
       - deploy/grader/**
       - gymhub/runner/pooled.py
+      - gyms.lock
       - .github/workflows/grader-images.yml
   workflow_dispatch:
 
@@ -38,6 +39,8 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+      - name: Fetch the gyms (gyms.lock pins a commit of the gyms repository)
+        run: python3 -m gymhub.gymsfetch
       - uses: docker/setup-buildx-action@v3
       - uses: docker/build-push-action@v6
         with:
