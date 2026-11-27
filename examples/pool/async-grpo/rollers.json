@@ -1,0 +1,11 @@
+{
+  "name": "roller",
+  "image": "pool/rl-spike:verl",
+  "command": ["python", "roller.py"],
+  "code": ".",
+  "inputs": [{"path": "base", "model": "qwen0.5b@instruct"}],
+  "subscribe": ["POLICY_NAME"],
+  "resources": {"gpus": 1, "share_gpu": true, "gpu_memory_gb": 12, "cpus": 3, "memory_gb": 16, "shm_gb": 2, "tmp_gb": 8, "pids": 4096},
+  "env": {"HF_HUB_OFFLINE": "1", "QUEUE": "QUEUE_NAME", "POLICY": "POLICY_NAME", "GPU_UTIL": "0.10", "IDLE": "90"},
+  "timeout_minutes": 120
+}

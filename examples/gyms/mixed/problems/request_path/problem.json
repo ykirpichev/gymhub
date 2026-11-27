@@ -1,0 +1,15 @@
+{
+  "title": "From URL to page",
+  "difficulty": "easy",
+  "summary": "Put steps in order.",
+  "kind": "order",
+  "minutes": 3,
+  "concepts": ["networking"],
+  "items": [
+    {"id": "tls", "text": "Negotiate TLS"},
+    {"id": "dns", "text": "Resolve the host name with DNS"},
+    {"id": "render", "text": "Render the HTML"},
+    {"id": "tcp", "text": "Open a TCP connection"},
+    {"id": "http", "text": "Send the HTTP request"}
+  ]
+}

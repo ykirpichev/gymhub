@@ -1,0 +1,21 @@
+{
+  "title": "What each operation costs",
+  "difficulty": "easy",
+  "summary": "Match pairs; one option is left over.",
+  "kind": "match",
+  "minutes": 3,
+  "concepts": ["complexity"],
+  "prompts": [
+    {"id": "hash", "text": "Look up a key in a hash table"},
+    {"id": "bsearch", "text": "Binary search a sorted array"},
+    {"id": "scan", "text": "Find the maximum of an unsorted array"},
+    {"id": "sort", "text": "Sort with merge sort"}
+  ],
+  "options": [
+    {"id": "o1", "text": "$O(1)$ on average"},
+    {"id": "ologn", "text": "$O(\\log n)$"},
+    {"id": "on", "text": "$O(n)$"},
+    {"id": "onlogn", "text": "$O(n \\log n)$"},
+    {"id": "on2", "text": "$O(n^2)$"}
+  ]
+}

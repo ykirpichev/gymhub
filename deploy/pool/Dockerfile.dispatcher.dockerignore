@@ -1,0 +1,14 @@
+# The dispatcher takes the runner and the gyms it publishes and slices (BuildKit reads <Dockerfile>.dockerignore).
+*
+!gymhub
+!gymkit
+!gpu_gym
+!gyms
+!pool
+!deploy/requirements-board.txt
+!deploy/pool/dispatcher-entrypoint.sh
+pool/sidecar
+gyms/*/solutions
+gyms/*/progress.json*
+**/__pycache__
+**/*.pyc

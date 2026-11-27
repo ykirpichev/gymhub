@@ -1,0 +1,26 @@
+# Grader image for GPU jobs on a Jetson (JetPack 6, L4T r36.x, arm64), issue #132: the graders at
+# /opt/gym on top of an L4T image that already has PyTorch for Jetson, CUDA 12.6 with nvcc, numpy
+# and g++. A CUDA image built for x86 cards or a GB10 does not run on a Jetson's L4T userland.
+#
+# Base: dustynv/l4t-pytorch:r36.4.0 (jetson-containers, arm64, Python 3.10). Override it with
+# --build-arg L4T_IMAGE=... for another L4T release or your own Jetson PyTorch image. Triton is not
+# installed (there is no Triton build matched to that PyTorch): Triton exercises fail on a Jetson;
+# set TRITON=<pip requirement> to try one. Build from the repository root, on a Jetson or with QEMU:
+#     docker buildx build --platform linux/arm64 -f deploy/grader/Dockerfile.l4t -t grader:l4t-r36 .
+ARG L4T_IMAGE=dustynv/l4t-pytorch:r36.4.0
+FROM ${L4T_IMAGE}
+ARG TRITON=
+
+# jetson-containers images point pip at their own index; plain PyPI wheels are enough here.
+ENV PIP_INDEX_URL=https://pypi.org/simple PIP_EXTRA_INDEX_URL=
+RUN pip3 install --no-cache-dir ninja rich ${TRITON:+"$TRITON"} \
+ && python3 -c "import numpy" \
+ && test -x /usr/local/cuda/bin/nvcc
+
+ENV PYTHONPATH=/opt/gym HOME=/tmp PYTHONDONTWRITEBYTECODE=1 GYM_SANDBOX=1 NO_COLOR=1
+COPY gymkit /opt/gym/gymkit
+COPY gpu_gym /opt/gym/gpu_gym
+# Jobs run as the pool agent's uid on a read-only root: everything must be world-readable.
+RUN chmod -R a+rX /opt/gym && python3 -c "import gymkit.cli"
+
+WORKDIR /work

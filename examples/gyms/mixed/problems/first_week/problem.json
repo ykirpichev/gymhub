@@ -1,0 +1,11 @@
+{
+  "title": "Your first week",
+  "difficulty": "easy",
+  "summary": "A self-reported checklist.",
+  "kind": "checklist",
+  "items": [
+    "Solve one exercise in every gym",
+    "Read the hints for an exercise you solved, and compare approaches",
+    "Benchmark a solution and improve it once"
+  ]
+}

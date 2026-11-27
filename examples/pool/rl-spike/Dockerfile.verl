@@ -1,0 +1,11 @@
+# Spike S1 (issue #45): verl on top of NVIDIA's vLLM image (arm64 + x86, CUDA 13, torch 2.12, vLLM 0.19).
+# The image's torch, vLLM and transformers are pinned so pip cannot replace them; verl itself is
+# installed without dependencies because its vllm extra says <=0.12 (the API it uses still works).
+FROM nvcr.io/nvidia/vllm:26.04-py3
+RUN pip freeze | grep -iE '^(torch|vllm|transformers|numpy|triton|flash.attn|xformers|nvidia-)[^=]*==' > /tmp/keep.txt \
+ && pip install --no-cache-dir --constraint /tmp/keep.txt \
+      "ray[default]>=2.41,<2.61" "tensordict>=0.8,<=0.10,!=0.9.0" hydra-core codetiming datasets peft accelerate \
+      dill pybind11 pylatexenc pyarrow pandas \
+ && pip install --no-cache-dir --no-deps "torchdata==0.11.0" "verl==0.8.0" \
+ && python -c "import verl, ray, tensordict, torch, vllm, transformers; print('verl', verl.__version__, 'ray', ray.__version__, 'torch', torch.__version__, 'vllm', vllm.__version__, 'transformers', transformers.__version__)"
+ENV HOME=/tmp HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 RAY_USAGE_STATS_ENABLED=0 PYTHONUNBUFFERED=1

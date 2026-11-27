@@ -1,0 +1,53 @@
+# The pool's controller: the pool server and the board's dispatcher, in containers.
+#
+#   cp deploy/pool/pool.env.example deploy/pool/.env     # then set POOL_PUBLIC_URL (and the board's, below)
+#   docker compose -f deploy/pool/compose.controller.yml up -d
+#   docker compose -f deploy/pool/compose.controller.yml logs pool-server   # the first admin's one-time code
+#
+# docs/pool.md ("Docker") has the whole walk-through. Images: the ones CI publishes to GHCR, or
+# `--build` to build them from this checkout.
+name: pool-controller
+
+services:
+  pool-server:
+    image: ${POOL_IMAGE:-ghcr.io/ykirpichev/human-gym/pool:latest}
+    build: {context: ../.., dockerfile: deploy/pool/Dockerfile}
+    command: ["server", "--public-url", "${POOL_PUBLIC_URL:?set POOL_PUBLIC_URL in deploy/pool/.env, e.g. http://192.168.1.10:8765}"]
+    environment:
+      POOL_METRICS_TOKEN: ${POOL_METRICS_TOKEN:-}
+    ports:
+      # Keep the server on your LAN (docs/pool.md, "Network exposure"): POOL_BIND=<LAN address>.
+      - "${POOL_BIND:-0.0.0.0}:${POOL_PORT:-8765}:8765"
+    volumes:
+      - pool-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8765/healthz', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  dispatcher:
+    # Leases the board's jobs and grades every one on the pool; runs nothing itself. Starts once it has
+    # a pool member (POOL_TOKEN, or `pool login` below) and a board (GYMHUB_API + GYMHUB_WORKER_TOKEN).
+    image: ${DISPATCHER_IMAGE:-ghcr.io/ykirpichev/human-gym/dispatcher:latest}
+    build: {context: ../.., dockerfile: deploy/pool/Dockerfile.dispatcher}
+    depends_on: [pool-server]
+    environment:
+      GYMHUB_API: ${GYMHUB_API:-}
+      GYMHUB_WORKER_TOKEN: ${GYMHUB_WORKER_TOKEN:-}
+      GYMHUB_STORE: ${GYMHUB_STORE:-}
+      GYMHUB_POOL: ${GYMHUB_POOL:-}
+      POOL_SERVER: ${POOL_SERVER:-http://pool-server:8765}
+      POOL_TOKEN: ${POOL_TOKEN:-}
+      # Which grader images pool machines run (docs/self-hosting.md, "Grading on the compute pool").
+      GYMHUB_GRADER_IMAGE: ${GYMHUB_GRADER_IMAGE:-}
+      GYMHUB_GRADER_VERSION: ${GYMHUB_GRADER_VERSION:-}
+      GYMHUB_POOL_IMAGE: ${GYMHUB_POOL_IMAGE:-}
+    volumes:
+      - dispatcher-state:/state
+    restart: unless-stopped
+
+volumes:
+  pool-data:
+  dispatcher-state:

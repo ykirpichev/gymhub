@@ -1,0 +1,6 @@
+{
+  "correct": [
+    "b"
+  ],
+  "explanation": "Each step halves the range, so about log2(n) steps."
+}

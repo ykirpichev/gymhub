@@ -1,0 +1,7 @@
+# The pool image takes only the pool package (BuildKit reads <Dockerfile>.dockerignore).
+*
+!pool
+!deploy/pool/entrypoint.sh
+pool/sidecar
+**/__pycache__
+**/*.pyc

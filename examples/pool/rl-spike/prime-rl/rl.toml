@@ -1,0 +1,54 @@
+# prime-rl's reverse-text example, shrunk for one shared GB10 inside a pool job:
+# the model and dataset are pool inputs, inference and the trainer share GPU 0 (run.sh).
+mode = "rl"
+max_steps = 15
+seq_len = 1024
+
+# NCCL cannot put two ranks (trainer and vLLM) on one GPU: hand weights over through files instead.
+[weight_broadcast]
+type = "filesystem"
+
+[model]
+name = "/inputs/base"
+
+[orchestrator]
+batch_size = 64
+
+[orchestrator.train]
+group_size = 8
+
+[orchestrator.train.sampling]
+max_completion_tokens = 128
+
+[[orchestrator.train.source]]
+name = "reverse-text"
+env.taskset.id = "reverse-text"
+env.taskset.dataset_name = "/inputs/data"
+env.agent.harness.id = "null"
+env.agent.runtime.type = "subprocess"
+
+[orchestrator.eval]
+interval = 5
+
+[orchestrator.eval.sampling]
+max_completion_tokens = 128
+
+[[orchestrator.eval.source]]
+name = "reverse-text-eval"
+select.limit = 64
+env.taskset.id = "reverse-text"
+env.taskset.dataset_name = "/inputs/data"
+env.agent.harness.id = "null"
+env.agent.runtime.type = "subprocess"
+
+[trainer.optim]
+lr = 3e-6
+
+[inference]
+
+[inference.vllm]
+gpu_memory_utilization = 0.3
+max_model_len = 1024
+
+[orchestrator.renderer]
+name = "prime-qwen3"

@@ -1,0 +1,16 @@
+FROM python:3.12-slim
+ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
+WORKDIR /app
+COPY requirements-board.txt .
+RUN pip install -r requirements-board.txt
+COPY gymhub/__init__.py gymhub/store.py gymhub/jobqueue.py gymhub/quotas.py gymhub/bundle.py gymhub/routing.py gymhub/packages.py gymhub/gymversions.py gymhub/blobs.py gymhub/gymaccess.py gymhub/gymdraft.py gymhub/gymmd.py gymhub/GYM_MARKDOWN.md gymhub/kinds.py gymhub/tutor.py gymhub/reviews.py gymhub/leaderboard.py gymhub/health.py gymhub/poolview.py gymhub/accounts.py gymhub/
+# What a new machine downloads when it registers: gym code and exercises, never solutions or progress.
+COPY worker-bundle.tar.gz /app/worker-bundle.tar.gz
+COPY gymhub/board gymhub/board
+# The Compute page reads the pool server (gymhub/board/poolmachines.py): its client, standard library only.
+COPY pool/__init__.py pool/client.py pool/
+# Served to browsers that run an exercise's examples (/browser/<name>, static/browser-worker.js). Not imported.
+COPY gymkit/compare.py gymkit/examples.py gymkit/
+RUN useradd --uid 10001 board
+USER board
+CMD exec uvicorn gymhub.board.app:app --host 0.0.0.0 --port ${PORT:-8080} --proxy-headers --forwarded-allow-ips='*'

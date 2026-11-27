@@ -1,0 +1,6 @@
+# The grader images take only the graders from the repository (BuildKit reads <Dockerfile>.dockerignore).
+*
+!gymkit
+!gpu_gym
+**/__pycache__
+**/*.pyc

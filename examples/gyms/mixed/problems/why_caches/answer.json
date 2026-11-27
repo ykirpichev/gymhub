@@ -1,0 +1,4 @@
+{
+  "rubric": "1. Says main memory is much slower than the cache (latency gap).\n2. Mentions locality: recently or nearby accessed data is likely to be reused (temporal or spatial).\n3. Names a cache-unfriendly pattern, such as random access over a large array, large strides, or a working set bigger than the cache.\n4. Explains why that pattern hurts: misses force slow trips to memory.",
+  "pass_score": 0.75
+}

@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "id": "hello",
+  "title": "Hello gym",
+  "description": "A two-exercise example of an uploadable gym. Copy this folder to start your own.",
+  "runtime": "gymkit",
+  "requires": {"gpu": false},
+  "order": 50,
+  "langs": [
+    {"id": "python", "label": "Python", "editor": "python", "file": "solution.py"}
+  ],
+  "tracks": [
+    {"name": "Warm-up", "exercises": ["sum_list", "is_palindrome"]}
+  ]
+}

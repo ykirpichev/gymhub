@@ -1,0 +1,4 @@
+# written by demo.sh for each run
+out-*/
+trainer-*.json
+rollers-*.json

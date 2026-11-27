@@ -1,0 +1,10 @@
+{
+  "name": "roller",
+  "image": "nvcr.io/nvidia/vllm:26.04-py3",
+  "command": ["python", "roller.py"],
+  "code": ".",
+  "inputs": [{"path": "base", "model": "MODEL_NAME"}],
+  "resources": {"gpus": 1, "cpus": 16, "memory_gb": 110, "shm_gb": 16, "tmp_gb": 32, "pids": 8192},
+  "env": {"HF_HUB_OFFLINE": "1", "QUEUE": "prompts", "MAX_TOKENS": "256", "TARGET": "256", "GPU_UTIL": "0.80", "IDLE": "30"},
+  "timeout_minutes": 120
+}

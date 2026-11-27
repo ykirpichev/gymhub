@@ -1,0 +1,144 @@
+{
+  "flip-off": {
+    "final_val_loss": 1.6537,
+    "best": 1.6537,
+    "rounds_with_a_rank_left_out": 0,
+    "excluded": [],
+    "curve": [
+      5.7227,
+      2.8835,
+      2.5218,
+      2.3994,
+      2.241,
+      2.0505,
+      1.9037,
+      1.7647,
+      1.6537
+    ]
+  },
+  "flip-on": {
+    "final_val_loss": 1.3412,
+    "best": 1.3412,
+    "rounds_with_a_rank_left_out": 8,
+    "excluded": [
+      "evil"
+    ],
+    "curve": [
+      5.7227,
+      2.4653,
+      2.2509,
+      1.9832,
+      1.7509,
+      1.5954,
+      1.4853,
+      1.4069,
+      1.3412
+    ]
+  },
+  "none-off": {
+    "final_val_loss": 1.3358,
+    "best": 1.3358,
+    "rounds_with_a_rank_left_out": 0,
+    "excluded": [],
+    "curve": [
+      5.7227,
+      2.4647,
+      2.2443,
+      1.9747,
+      1.7442,
+      1.5904,
+      1.4815,
+      1.4024,
+      1.3358
+    ]
+  },
+  "none-on": {
+    "final_val_loss": 1.3357,
+    "best": 1.3357,
+    "rounds_with_a_rank_left_out": 0,
+    "excluded": [],
+    "curve": [
+      5.7227,
+      2.4647,
+      2.2443,
+      1.9742,
+      1.7441,
+      1.5905,
+      1.4815,
+      1.4024,
+      1.3357
+    ]
+  },
+  "random-off": {
+    "final_val_loss": 1.4334,
+    "best": 1.4334,
+    "rounds_with_a_rank_left_out": 0,
+    "excluded": [],
+    "curve": [
+      5.7227,
+      2.5932,
+      2.3688,
+      2.1553,
+      1.9376,
+      1.7447,
+      1.6076,
+      1.5084,
+      1.4334
+    ]
+  },
+  "random-on": {
+    "final_val_loss": 1.3412,
+    "best": 1.3412,
+    "rounds_with_a_rank_left_out": 8,
+    "excluded": [
+      "evil"
+    ],
+    "curve": [
+      5.7227,
+      2.4653,
+      2.2509,
+      1.9832,
+      1.7509,
+      1.5954,
+      1.4853,
+      1.4069,
+      1.3412
+    ]
+  },
+  "scale-off": {
+    "final_val_loss": 2.9421,
+    "best": 2.8673,
+    "rounds_with_a_rank_left_out": 0,
+    "excluded": [],
+    "curve": [
+      5.7227,
+      3.4246,
+      3.068,
+      3.235,
+      3.0119,
+      3.2366,
+      2.8673,
+      3.1428,
+      2.9421
+    ]
+  },
+  "scale-on": {
+    "final_val_loss": 1.3412,
+    "best": 1.3412,
+    "rounds_with_a_rank_left_out": 8,
+    "excluded": [
+      "evil"
+    ],
+    "curve": [
+      5.7227,
+      2.4653,
+      2.2509,
+      1.9832,
+      1.7509,
+      1.5954,
+      1.4853,
+      1.4069,
+      1.3412
+    ]
+  }
+}

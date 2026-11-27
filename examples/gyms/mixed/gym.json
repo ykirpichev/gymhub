@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "id": "mixed",
+  "title": "Mixed gym",
+  "description": "One exercise of every kind: a lesson, code, a typed answer, single and multiple choice, ordering, matching, fill in the blanks, an essay and a checklist.",
+  "runtime": "gymkit",
+  "requires": {
+    "gpu": false
+  },
+  "order": 51,
+  "langs": [
+    {
+      "id": "python",
+      "label": "Python",
+      "editor": "python",
+      "file": "solution.py"
+    }
+  ],
+  "tracks": [
+    {
+      "name": "Answers the board grades",
+      "summary": "A lesson, then typed answers, choices, ordering, matching and blanks, all checked on the board in an instant.",
+      "exercises": [
+        "how_this_works",
+        "capital",
+        "binary_search_cost",
+        "primes",
+        "request_path",
+        "cost_of_operations",
+        "running_mean"
+      ]
+    },
+    {
+      "name": "Code and longer work",
+      "summary": "Code a machine grades, an essay against a rubric, and a checklist you tick off.",
+      "exercises": [
+        "sum_list",
+        "why_caches",
+        "first_week"
+      ]
+    }
+  ]
+}

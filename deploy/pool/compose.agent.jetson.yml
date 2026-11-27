@@ -1,0 +1,10 @@
+# A Jetson (JetPack 6, L4T r36): the NVIDIA runtime mounts the integrated GPU's device nodes into the
+# agent (CSV mode, no nvidia-smi), and /etc/nv_tegra_release labels the machine gpu=tegra, so GPU jobs
+# get the L4T grader image (deploy/grader/Dockerfile.l4t).
+services:
+  agent:
+    runtime: nvidia
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+    volumes:
+      - /etc/nv_tegra_release:/etc/nv_tegra_release:ro

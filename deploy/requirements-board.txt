@@ -1,0 +1,7 @@
+fastapi==0.165.0
+uvicorn==0.54.0
+google-cloud-firestore==2.34.1
+google-auth==2.63.1
+requests>=2.32
+cryptography>=44
+anthropic==2.13.0

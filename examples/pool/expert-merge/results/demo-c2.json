@@ -1,0 +1,55 @@
+[
+  {
+    "mode": "anchor",
+    "params": 3356160,
+    "eval": {
+      "code": 1.4169,
+      "legal": 1.0752,
+      "mean": 1.246
+    }
+  },
+  {
+    "mode": "expert",
+    "domain": "code",
+    "params": 3356160,
+    "eval": {
+      "code": 1.2119,
+      "legal": 1.5908,
+      "mean": 1.4013
+    }
+  },
+  {
+    "mode": "expert",
+    "domain": "legal",
+    "params": 3356160,
+    "eval": {
+      "code": 1.8429,
+      "legal": 0.8386,
+      "mean": 1.3407
+    }
+  },
+  {
+    "mode": "merge",
+    "before_router": {
+      "code": 1.266,
+      "legal": 1.1638,
+      "mean": 1.2149
+    },
+    "params": 7563776,
+    "eval": {
+      "code": 1.2598,
+      "legal": 0.8978,
+      "mean": 1.0788
+    }
+  },
+  {
+    "mode": "dense",
+    "steps": 9600,
+    "params": 7558656,
+    "eval": {
+      "code": 1.144,
+      "legal": 0.738,
+      "mean": 0.941
+    }
+  }
+]

@@ -1,0 +1,9 @@
+# Demo B's image plus TOPLOC (https://github.com/PrimeIntellect-ai/toploc), for the checked tier (M6):
+# rollers commit to their activations with TOPLOC proofs and the trainer verifies them (pool_verify).
+#   docker build -t pool/rl-spike:verl-toploc -f Dockerfile.toploc .
+# Jobs run without network, so the package has to be in the image. Its wheels are built against one
+# torch release and fail to import with the image's (undefined at:: symbols), so it is built from
+# source against the image's torch (--no-binary, --no-build-isolation); --no-deps keeps that torch.
+FROM pool/rl-spike:verl
+RUN pip install --no-cache-dir --no-deps --no-build-isolation --no-binary toploc "toploc==0.1.6" \
+ && python -c "import toploc; print('toploc', toploc.__version__)"

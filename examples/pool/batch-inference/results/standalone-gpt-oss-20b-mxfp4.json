@@ -1,0 +1,1 @@
+{"mode": "standalone", "model": "/hf/models--openai--gpt-oss-20b/snapshots/6cee5e81ee83917806bbde320786a8fb61efebee", "prompts": 2048, "tokens": 524288, "seconds": 177.83, "tokens_per_s": 2948.2, "load_seconds": 111.1}

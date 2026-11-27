@@ -1,0 +1,1 @@
+{"mode": "standalone", "model": "/hf/models--Qwen--Qwen3-30B-A3B-FP8/snapshots/d206ba732169f29bb77fbf80fc2c4b81d4d30782", "prompts": 2048, "tokens": 524288, "seconds": 269.97, "tokens_per_s": 1942.0, "load_seconds": 249.0}

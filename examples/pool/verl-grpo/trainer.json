@@ -1,0 +1,10 @@
+{
+  "name": "verl-trainer",
+  "image": "pool/rl-spike:verl",
+  "command": ["bash", "run.sh"],
+  "code": ".",
+  "inputs": [{"path": "base", "model": "qwen0.5b@instruct"}],
+  "resources": {"gpus": 1, "share_gpu": true, "gpu_memory_gb": 24, "cpus": 8, "memory_gb": 40, "shm_gb": 4, "tmp_gb": 8, "pids": 4096},
+  "env": {"HF_HUB_OFFLINE": "1", "QUEUE": "QUEUE_NAME", "POLICY": "POLICY_NAME", "STEPS": "30", "AHEAD": "1", "MAX_LAG": "1", "TASKS_PER_STEP": "8"},
+  "timeout_minutes": 120
+}

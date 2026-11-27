@@ -1,0 +1,10 @@
+{
+  "name": "trainer",
+  "image": "pool/rl-spike:verl",
+  "command": ["python", "trainer.py"],
+  "code": ".",
+  "inputs": [{"path": "base", "model": "qwen0.5b@instruct"}],
+  "resources": {"gpus": 1, "share_gpu": true, "gpu_memory_gb": 24, "cpus": 6, "memory_gb": 32, "shm_gb": 2, "tmp_gb": 8},
+  "env": {"HF_HUB_OFFLINE": "1", "QUEUE": "QUEUE_NAME", "POLICY": "POLICY_NAME", "STEPS": "30", "AHEAD": "1", "MAX_LAG": "1", "TASKS_PER_STEP": "8"},
+  "timeout_minutes": 120
+}

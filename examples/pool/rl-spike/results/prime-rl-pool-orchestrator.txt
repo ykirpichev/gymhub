@@ -1,0 +1,19 @@
+Evaluated reverse-text-eval | Policy v0 |    7.9s | Reward 0.1613
+Step 1 |   18.9s | Reward 0.2369 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 0 | Truncation 70.3% | Timeout 0.0%
+Step 2 |    4.8s | Reward 0.1886 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 1 | Truncation 75.0% | Timeout 0.0%
+Step 3 |   17.9s | Reward 0.2271 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 2 | Truncation 71.9% | Timeout 0.0%
+Step 4 |   13.3s | Reward 0.2024 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 3 | Truncation 78.1% | Timeout 0.0%
+Step 5 |    7.2s | Reward 0.1966 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 4 | Truncation 71.9% | Timeout 0.0%
+Step 6 |    7.4s | Reward 0.2095 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 5 | Truncation 70.3% | Timeout 0.0%
+Step 7 |    9.6s | Reward 0.2348 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 5 | Truncation 71.9% | Timeout 0.0%
+Evaluated reverse-text-eval | Policy v5 |    9.4s | Reward 0.6289
+Step 8 |   14.4s | Reward 0.4702 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 3 | Truncation 35.9% | Timeout 0.0%
+Step 9 |   10.6s | Reward 0.6347 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 2 | Truncation 9.4% | Timeout 0.0%
+Step 10 |   10.4s | Reward 0.7340 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 2 | Truncation 1.6% | Timeout 0.0%
+Step 11 |    9.8s | Reward 0.6538 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 2 | Truncation 7.8% | Timeout 0.0%
+Evaluated reverse-text-eval | Policy v10 |    5.9s | Reward 0.8260
+Step 12 |   16.3s | Reward 0.6957 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 2 | Truncation 9.4% | Timeout 0.0%
+Step 13 |    7.8s | Reward 0.6735 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 1 | Truncation 3.1% | Timeout 0.0%
+Step 14 |    8.8s | Reward 0.7644 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 2 | Truncation 3.1% | Timeout 0.0%
+Step 15 |    6.3s | Reward 0.7216 | Trainable 64/64 (100.0%) | Turns 1.0 | Branches 1.0 | Max Staleness 3 | Truncation 1.6% | Timeout 0.0%
+Evaluated reverse-text-eval | Policy v15 |    4.3s | Reward 0.8464

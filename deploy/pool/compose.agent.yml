@@ -1,0 +1,37 @@
+# A pool machine: the agent in a container, driving this host's Docker. Jobs are the host's
+# containers, siblings of the agent's, with the usual sandbox (docs/pool.md, "The sandbox").
+#
+#   POOL_SERVER=http://<server>:8765 POOL_CODE=<code from `pool machine add`> \
+#     docker compose -f deploy/pool/compose.agent.yml up -d                       # no GPU
+#   ... -f deploy/pool/compose.agent.yml -f deploy/pool/compose.agent.gpu.yml up -d     # x86 card, DGX Spark
+#   ... -f deploy/pool/compose.agent.yml -f deploy/pool/compose.agent.jetson.yml up -d  # Jetson (JetPack 6)
+#
+# The code is used once; the registration stays in /etc/pool/agent.json (the same file a host
+# install uses, so switching between the two keeps the machine). `sudo sh install.sh` from the
+# server does all of this for you, Docker and the NVIDIA toolkit included.
+name: pool-agent
+
+services:
+  agent:
+    image: ${POOL_IMAGE:-ghcr.io/ykirpichev/human-gym/pool:latest}
+    build: {context: ../.., dockerfile: deploy/pool/Dockerfile}
+    container_name: pool-agent
+    command: ["agent"]
+    environment:
+      POOL_SERVER: ${POOL_SERVER:-}
+      POOL_CODE: ${POOL_CODE:-}
+      POOL_NAME: ${POOL_NAME:-}
+      POOL_UID: ${POOL_UID:-10001}
+      POOL_GID: ${POOL_GID:-10001}
+      POOL_IMAGE: ${POOL_IMAGE:-ghcr.io/ykirpichev/human-gym/pool:latest}
+    # The host's network: peers reach the agent's peer port (8766) and it reports the LAN address it
+    # reaches the server from. The host's PIDs: it tells the owner's own GPU work from its jobs'.
+    network_mode: host
+    pid: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/pool:/etc/pool
+      # The same path inside and out: job containers mount their folders from the host.
+      - /var/lib/pool:/var/lib/pool
+    restart: unless-stopped
+    stop_grace_period: 90s

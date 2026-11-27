@@ -1,0 +1,24 @@
+{
+  "title": "Binary search cost",
+  "difficulty": "easy",
+  "summary": "One correct choice.",
+  "kind": "choice",
+  "choices": [
+    {
+      "id": "a",
+      "text": "O(1)"
+    },
+    {
+      "id": "b",
+      "text": "O(log n)"
+    },
+    {
+      "id": "c",
+      "text": "O(n)"
+    },
+    {
+      "id": "d",
+      "text": "O(n log n)"
+    }
+  ]
+}

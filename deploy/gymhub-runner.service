@@ -1,0 +1,28 @@
+# systemd user unit for the gym runner. Installed by deploy/install-runner.sh.
+# Worker-token mode: the machine holds only its worker token (~/.config/gymhub/worker-token), no Google login.
+[Unit]
+Description=Human Gym runner (executes board jobs on this GPU machine)
+After=network-online.target
+
+[Service]
+WorkingDirectory=@REPO@
+@ENVIRONMENT@
+ExecStart=@REPO@/.venv/bin/python -m gymhub.runner @RUNNER_ARGS@
+Restart=always
+RestartSec=10
+# 78: the board revoked this machine's token. Restarting would only be refused again.
+RestartPreventExitStatus=78
+# On stop, the runner kills its job (and the job's sandbox container); then systemd kills whatever is left.
+KillMode=control-group
+TimeoutStopSec=30
+# Hardening that needs no namespaces, so it works in a user unit and leaves Docker and the GPU alone
+# (ProtectSystem=, PrivateTmp= and the like need user namespaces here, which some distributions block).
+NoNewPrivileges=yes
+UMask=0077
+LockPersonality=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=default.target

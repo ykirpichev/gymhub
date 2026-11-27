@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "id": "gpu-scale",
+  "title": "GPU scale",
+  "description": "A one-exercise example of an uploadable GPU gym (CUDA and PyTorch). Copy this folder to start your own.",
+  "runtime": "gpu_gym",
+  "requires": {"gpu": true},
+  "order": 60,
+  "langs": [
+    {"id": "cuda", "label": "CUDA", "editor": "cpp", "file": "solution.cu"},
+    {"id": "pytorch", "label": "PyTorch", "editor": "python", "file": "solution.py"}
+  ],
+  "tracks": [
+    {"name": "Warm-up", "exercises": ["scale"]}
+  ]
+}

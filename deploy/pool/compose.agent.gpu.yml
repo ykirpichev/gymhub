@@ -1,0 +1,13 @@
+# GPUs for the agent (x86 cards, DGX Spark / GB10): it sees them with nvidia-smi to report them.
+# Jobs get their own GPUs from the host's Docker (--gpus device=N). Needs the NVIDIA container toolkit.
+services:
+  agent:
+    environment:
+      NVIDIA_DRIVER_CAPABILITIES: utility
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu, utility]

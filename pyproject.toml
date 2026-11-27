@@ -1,0 +1,28 @@
+[project]
+name = "human-gym"
+version = "0.1.0"
+description = "Practice gyms (GPU kernels, LLM internals, algorithms), a web board to practise them on, and a compute pool"
+requires-python = ">=3.10"
+dependencies = ["rich>=13"]
+
+[project.optional-dependencies]
+# The runner (on your GPU machine) and the board (local dev). The Cloud Run image pins its own list.
+hub = ["google-cloud-firestore>=2.20", "google-auth>=2.30", "requests>=2.32", "fastapi>=0.115", "uvicorn>=0.30", "psycopg[binary]>=3.2"]
+
+[project.scripts]
+gpu-gym = "gpu_gym.cli:main"
+llm-gym = "gymkit.cli:llm_main"
+algo-gym = "gymkit.cli:algo_main"
+gymhub-runner = "gymhub.runner.agent:main"
+gymhub-board = "gymhub.local:main"
+pool = "pool.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["gpu_gym*", "gymkit*", "gymhub*", "pool*"]
+
+[tool.setuptools.package-data]
+gymhub = ["GYM_MARKDOWN.md"]  # `gymhub.cli gym guide` and the board's /docs/gym-markdown

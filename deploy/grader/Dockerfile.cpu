@@ -1,0 +1,21 @@
+# Grader image for jobs without a GPU (issue #132): Python, numpy, g++, and the graders at /opt/gym.
+# Multi-arch (amd64, arm64), so it also runs CPU jobs on a DGX Spark or a Jetson.
+#
+# The pool job brings only the gym slice and the submission, at /work (gymhub/runner/pooled.py).
+# Build from the repository root:
+#     docker build -f deploy/grader/Dockerfile.cpu -t grader:cpu .
+ARG PYTHON_IMAGE=python:3.12-slim-bookworm
+FROM ${PYTHON_IMAGE}
+
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends g++ make libgomp1 \
+ && rm -rf /var/lib/apt/lists/*
+RUN pip install --no-cache-dir numpy rich
+
+ENV PYTHONPATH=/opt/gym HOME=/tmp PYTHONDONTWRITEBYTECODE=1 GYM_SANDBOX=1 NO_COLOR=1
+COPY gymkit /opt/gym/gymkit
+COPY gpu_gym /opt/gym/gpu_gym
+# Jobs run as the pool agent's uid on a read-only root: everything must be world-readable.
+RUN chmod -R a+rX /opt/gym && python -c "import gymkit.cli, numpy"
+
+WORKDIR /work

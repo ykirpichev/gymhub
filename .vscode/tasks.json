@@ -1,0 +1,69 @@
+{
+  // Open any solution file under gyms/<gym>/solutions/<exercise>/ and press Ctrl+Shift+B to test it. The gym and language come from the
+  // file you have open. Other tasks: Terminal > Run Task.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "gym: submit this file (full tests, recorded)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python -m gymkit.pathrun test '${file}'",
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "gym: run this file (every case + outputs, not recorded)",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python -m gymkit.pathrun run '${file}'",
+      "presentation": { "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "gym: bench this file",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python -m gymkit.pathrun bench '${file}'",
+      "presentation": { "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "gym: hint for this exercise",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python -m gymkit.pathrun hint '${file}'",
+      "problemMatcher": []
+    },
+    {
+      "label": "gpu-gym: watch this exercise",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/gpu-gym watch ${fileDirnameBasename} --lang ${input:lang}",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "gpu-gym: progress",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/gpu-gym progress",
+      "problemMatcher": []
+    },
+    {
+      "label": "llm-gym: progress",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/llm-gym progress",
+      "problemMatcher": []
+    },
+    {
+      "label": "algo-gym: progress",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/algo-gym progress",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "lang",
+      "type": "pickString",
+      "description": "Language",
+      "options": ["cuda", "pytorch", "triton", "all"],
+      "default": "cuda"
+    }
+  ]
+}

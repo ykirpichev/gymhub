@@ -1,0 +1,4 @@
+{
+  "order": ["dns", "tcp", "tls", "http", "render"],
+  "explanation": "The browser needs an address before it can connect, a connection before encrypting it, and an encrypted channel before sending the request."
+}

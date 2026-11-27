@@ -1,0 +1,73 @@
+# Unit and API tests on every push and pull request. No GPU here: CPU-only PyTorch, the GPU checks
+# that need CUDA skip themselves, and the board runs on SQLite instead of Firestore. The board's pages
+# are also opened in headless Chromium (Playwright for Node) and must load without errors.
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch numpy --index-url https://download.pytorch.org/whl/cpu
+          pip install -r deploy/requirements-board.txt
+          pip install -e ".[hub]" pytest pytest-xdist httpx "psycopg[binary]"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Playwright and Chromium (browser checks of the board, tests/test_ui.py)
+        run: |
+          npm install --no-save --no-package-lock --prefix "$RUNNER_TEMP/pw" playwright@1.63.0
+          echo "NODE_PATH=$RUNNER_TEMP/pw/node_modules" >> "$GITHUB_ENV"
+          "$RUNNER_TEMP/pw/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Validate the gym packages
+        run: python -m gymhub.packages validate
+      - name: Tests
+        env:
+          GYMHUB_UI_CHECKS: required
+        # In parallel, one worker per core: most tests wait on servers, agents and subprocesses.
+        run: python -m pytest -q -n auto --durations=15
+
+  pool-postgres:
+    # The compute pool's server and database tests against Postgres, beside the main job instead of
+    # after it. Needs neither torch nor a browser.
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_PASSWORD: pool
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r deploy/requirements-board.txt
+          pip install -e ".[hub]" pytest pytest-xdist httpx "psycopg[binary]"
+      - name: Compute pool tests on Postgres
+        env:
+          POOL_TEST_POSTGRES: postgresql://postgres:pool@localhost:5432/postgres
+        run: python -m pytest -q -n auto tests/test_pool.py tests/test_pool_migrations.py

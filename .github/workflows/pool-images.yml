@@ -1,0 +1,108 @@
+# The pool's own images (docs/pool.md, "Docker"):
+#   pool        the pool server and the agent (deploy/pool/Dockerfile), amd64 + arm64
+#   dispatcher  the board's dispatcher, gymhub-runner --dispatch-only (deploy/pool/Dockerfile.dispatcher), amd64 + arm64
+# Each is tagged latest and <short sha>. A pull request builds both for amd64 without pushing, and runs
+# deploy/pool/smoke.sh: a server container, an agent container from compose.agent.yml, and one job.
+name: pool-images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - pool/**
+      - gymhub/**
+      - gymkit/**
+      - gpu_gym/**
+      - gyms/**
+      - deploy/pool/**
+      - deploy/requirements-board.txt
+      - .github/workflows/pool-images.yml
+  pull_request:
+    paths:
+      - pool/**
+      - gymhub/runner/**
+      - deploy/pool/**
+      - deploy/requirements-board.txt
+      - .github/workflows/pool-images.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  REGISTRY: ghcr.io/${{ github.repository }}
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deploy/pool/Dockerfile
+          platforms: linux/amd64
+          load: true
+          tags: pool:smoke
+          cache-from: type=gha,scope=pool
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deploy/pool/Dockerfile.dispatcher
+          platforms: linux/amd64
+          load: true
+          tags: dispatcher:smoke
+          cache-from: type=gha,scope=dispatcher
+      - name: Server, agent and a job, in containers
+        run: deploy/pool/smoke.sh pool:smoke
+      - name: The dispatcher starts and says what it lacks
+        run: |
+          docker run -d --name dispatcher dispatcher:smoke
+          sleep 5
+          docker logs dispatcher 2>&1 | tee /dev/stderr | grep -q "dispatcher: waiting for a pool member"
+          docker rm -f dispatcher
+
+  build:
+    if: github.event_name != 'pull_request'
+    needs: smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: pool
+            file: deploy/pool/Dockerfile
+          - name: dispatcher
+            file: deploy/pool/Dockerfile.dispatcher
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tags
+        id: tags
+        run: echo "short=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ matrix.file }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          provenance: false
+          tags: |
+            ${{ env.REGISTRY }}/${{ matrix.name }}:latest
+            ${{ env.REGISTRY }}/${{ matrix.name }}:${{ steps.tags.outputs.short }}
+          cache-from: type=gha,scope=${{ matrix.name }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.name }}

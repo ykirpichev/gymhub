@@ -1,0 +1,6 @@
+{
+  "title": "Scale a vector",
+  "difficulty": "easy",
+  "summary": "Y = 2·X for a float32 vector.",
+  "kind": "code"
+}

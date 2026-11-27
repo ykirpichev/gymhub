@@ -1,0 +1,29 @@
+{
+  "title": "Spot the primes",
+  "difficulty": "easy",
+  "summary": "Several correct choices.",
+  "kind": "choice",
+  "multiple": true,
+  "choices": [
+    {
+      "id": "n2",
+      "text": "2"
+    },
+    {
+      "id": "n9",
+      "text": "9"
+    },
+    {
+      "id": "n11",
+      "text": "11"
+    },
+    {
+      "id": "n15",
+      "text": "15"
+    },
+    {
+      "id": "n17",
+      "text": "17"
+    }
+  ]
+}

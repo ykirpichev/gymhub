@@ -1,0 +1,4 @@
+{
+  "pairs": {"hash": "o1", "bsearch": "ologn", "scan": "on", "sort": "onlogn"},
+  "explanation": "Nothing here is quadratic: merge sort splits in halves and merges in linear time per level."
+}

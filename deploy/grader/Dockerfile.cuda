@@ -1,0 +1,28 @@
+# Grader image for GPU jobs on x86 cards and on DGX Spark / GB10 (arm64 sbsa), issue #132:
+# nvcc (CUDA devel base), PyTorch with its Triton, numpy, ninja, g++, and the graders at /opt/gym.
+# Multi-arch (amd64, arm64). Not for a Jetson: see Dockerfile.l4t.
+#
+# CUDA 13 needs an NVIDIA driver >= 580 on the host. The torch wheels come from the PyTorch index
+# for the same CUDA major and minor (setup.sh uses cu132). Build from the repository root:
+#     docker build -f deploy/grader/Dockerfile.cuda -t grader:cuda .
+ARG CUDA_IMAGE=nvidia/cuda:13.2.0-devel-ubuntu24.04
+FROM ${CUDA_IMAGE}
+ARG TORCH_INDEX=https://download.pytorch.org/whl/cu132
+
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+      python3 python3-venv python3-dev g++ make libgomp1 \
+ && rm -rf /var/lib/apt/lists/*
+# A venv: Ubuntu 24.04's system Python refuses pip installs (PEP 668).
+RUN python3 -m venv /opt/venv \
+ && /opt/venv/bin/pip install --no-cache-dir torch --index-url "${TORCH_INDEX}" \
+ && /opt/venv/bin/pip install --no-cache-dir numpy ninja rich \
+ && /opt/venv/bin/python -c "import torch, triton, numpy; print('torch', torch.__version__, 'cuda', torch.version.cuda, 'triton', triton.__version__)"
+
+ENV PATH=/opt/venv/bin:${PATH} PYTHONPATH=/opt/gym HOME=/tmp PYTHONDONTWRITEBYTECODE=1 GYM_SANDBOX=1 NO_COLOR=1
+COPY gymkit /opt/gym/gymkit
+COPY gpu_gym /opt/gym/gpu_gym
+# Jobs run as the pool agent's uid on a read-only root: everything must be world-readable.
+RUN chmod -R a+rX /opt/gym && /opt/venv/bin/python -c "import gymkit.cli, gpu_gym.cli"
+
+WORKDIR /work

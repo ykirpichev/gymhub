@@ -1,0 +1,9 @@
+{
+  "title": "A running mean",
+  "difficulty": "easy",
+  "summary": "Fill in the blanks: a word, a number and a line of code.",
+  "kind": "fill",
+  "minutes": 4,
+  "concepts": ["streaming"],
+  "text": "After the values 2, 4 and 9 the mean is [[mean]]. Adding one more value $x$ to $n$ values with mean $m$ gives the new mean $m + (x - m) / k$, where $k$ is [[denominator]]. So a stream needs only the count and the [[state]] so far."
+}

@@ -1,0 +1,30 @@
+# The board's dispatcher in a container (docs/pool.md, "Docker"): `gymhub-runner --dispatch-only`,
+# which leases the board's jobs and grades every one of them on the compute pool. It executes nothing
+# itself, so it needs no GPU, no Docker socket and no PyTorch. Multi-arch (amd64, arm64).
+#
+#   board on Cloud Run (or any board):  GYMHUB_API=<board's worker URL> GYMHUB_WORKER_TOKEN=<token>
+#   a board on this machine (SQLite):   GYMHUB_STORE=sqlite:/state/board.db (the board's own file)
+#   the pool member it submits as:      POOL_SERVER + POOL_TOKEN, or `pool login` into /state/pool
+#
+# Build from the repository root:  docker build -f deploy/pool/Dockerfile.dispatcher -t dispatcher .
+FROM python:3.12-slim
+COPY deploy/requirements-board.txt /tmp/requirements.txt
+# numpy: the runner validates the repository's courses before it publishes them (gymhub/courses.py).
+RUN pip install --no-cache-dir -r /tmp/requirements.txt rich numpy && rm /tmp/requirements.txt
+WORKDIR /app
+COPY gymhub gymhub
+COPY gymkit gymkit
+COPY gpu_gym gpu_gym
+# The runner writes into the gyms (gpu solutions scaffolds, progress files): the dispatcher owns them.
+COPY --chown=10001:10001 gyms gyms
+COPY pool pool
+COPY deploy/pool/dispatcher-entrypoint.sh /usr/local/bin/dispatcher
+# The runner's scratch, backups, bundles and gym slices (<repo>/.cache) live in the /state volume.
+RUN chmod 0755 /usr/local/bin/dispatcher && useradd --uid 10001 --home-dir /state --no-create-home dispatcher \
+ && install -d -o dispatcher -g dispatcher -m 0700 /state && ln -s /state/cache /app/.cache \
+ && python -c "import gymhub.runner.agent, pool.client"
+ENV PYTHONPATH=/app PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 HOME=/state POOL_CONFIG_DIR=/state/pool \
+    GYMHUB_EXECUTOR=pool GYMHUB_DISPATCH_ONLY=1
+USER dispatcher
+VOLUME /state
+ENTRYPOINT ["dispatcher"]

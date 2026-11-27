@@ -1,0 +1,11 @@
+{
+  "mode": "bench",
+  "model": "full",
+  "params": 6919161856,
+  "batch": 8,
+  "seq": 256,
+  "step_s": 0.835,
+  "tokens_per_s": 2453,
+  "sync_bytes_bf16": 13838323712,
+  "peak_gb": 27.8
+}
